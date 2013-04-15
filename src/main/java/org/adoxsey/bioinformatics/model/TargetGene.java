@@ -2,11 +2,15 @@ package org.adoxsey.bioinformatics.model;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import uk.ac.roslin.ensembl.dao.database.DBSpecies;
 import uk.ac.roslin.ensembl.datasourceaware.compara.DAHomologyPairRelationship;
+import uk.ac.roslin.ensembl.datasourceaware.core.DAChromosome;
 import uk.ac.roslin.ensembl.datasourceaware.core.DAGene;
 import uk.ac.roslin.ensembl.model.Coordinate;
 
+@Component
 public class TargetGene extends DAGene{
     private static final long serialVersionUID = 1L;
     
@@ -17,7 +21,25 @@ public class TargetGene extends DAGene{
     private DAGene gene;
     private Coordinate coords;
     private Coordinate.Strand strand;
-    private List<DAHomologyPairRelationship> homologues;
+    private List<DAHomologyPairRelationship> homologues;    
+    private Integer coordStart;
+    private Integer coordEnd;
+    private DAChromosome chr;
+    
+    public Integer getCoordStart() {
+        coordStart = coords.getStart();
+        return coordStart;
+    }
+    public void setCoordStart(Integer coordStart) {
+        this.coordStart = coordStart;
+    }
+    public Integer getCoordEnd() {
+        coordEnd = coords.getEnd();
+        return coordEnd;
+    }
+    public void setCoordEnd(Integer coordEnd) {
+        this.coordEnd = coordEnd;
+    }
     
     public List<DAHomologyPairRelationship> getTargetHomologues() {
         return homologues;
@@ -66,6 +88,12 @@ public class TargetGene extends DAGene{
     }
     public void setTargetStrand(Coordinate.Strand strand) {
         this.strand = strand;
+    }
+    public void setTargetChromosome(DAChromosome chr) {
+        this.chr=chr;       
+    }
+    public DAChromosome getTargetChromosome() {
+        return chr;
     }
 
 }

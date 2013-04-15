@@ -4,25 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.adoxsey.bioinformatics.model.TargetGene;
+import org.springframework.stereotype.Component;
 
 import uk.ac.roslin.ensembl.config.DBConnection.DataSource;
 import uk.ac.roslin.ensembl.dao.database.DBRegistry;
 import uk.ac.roslin.ensembl.dao.database.DBSpecies;
 import uk.ac.roslin.ensembl.dao.database.coreaccess.DBGeneDAO;
 import uk.ac.roslin.ensembl.dao.database.factory.DBDAOSingleSpeciesCoreFactory;
+import uk.ac.roslin.ensembl.datasourceaware.core.DAChromosome;
 import uk.ac.roslin.ensembl.datasourceaware.core.DAGene;
 import uk.ac.roslin.ensembl.exception.ConfigurationException;
 import uk.ac.roslin.ensembl.exception.DAOException;
+import uk.ac.roslin.ensembl.exception.NonUniqueException;
 import uk.ac.roslin.ensembl.model.Coordinate;
+import uk.ac.roslin.ensembl.model.Mapping;
 import uk.ac.roslin.ensembl.model.database.CoreDatabase;
 import uk.ac.roslin.ensembl.model.database.SingleSpeciesCoreDatabase;
 
+@Component
 public class GeneCreator {
-    
+
     private static String Stable_Gene_ID = "ENSG00000001626";
 
     private static String Species_Alias = "human";
-    
+
     public TargetGene createTargetGene(String displayName) {
         DBRegistry ensemblgenomesRegistry = null;
         try {
@@ -50,20 +55,24 @@ public class GeneCreator {
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        List<TargetGene> genes = new ArrayList<TargetGene>();
-        for(DAGene gene: daGenes){
-            genes.add((TargetGene)gene);
-        }
-        TargetGene g = genes.get(0);
+        /*
+         * List<TargetGene> genes = new ArrayList<TargetGene>(); for(DAGene
+         * gene: daGenes){ genes.add((TargetGene)gene); }
+         */
+        DAGene g = daGenes.get(0);
         Coordinate targetCoords = null;
+        Mapping chromosomeMapping = null;
         try {
-            targetCoords = g.getTopLevelTargetCoordinates();
-        } catch (DAOException e) {
-            e.printStackTrace();
+            chromosomeMapping = g.getChromosomeMapping();
+        } catch (NonUniqueException e1) {
+            e1.printStackTrace();
         }
-        targetStrand = targetCoords.getStrand();
+        targetStrand = chromosomeMapping.getTargetCoordinates().getStrand();
+        DAChromosome chr = (DAChromosome) chromosomeMapping.getTarget();
+        targetCoords = chromosomeMapping.getTargetCoordinates();
 
         TargetGene tGene = new TargetGene();
+        tGene.setTargetChromosome(chr);
         tGene.setTargetCoords(targetCoords);
         tGene.setTargetStableGeneID(Stable_Gene_ID);
         tGene.setTargetDisplayName(displayName);
@@ -74,5 +83,4 @@ public class GeneCreator {
 
         return tGene;
     }
-
 }

@@ -1,10 +1,12 @@
 package org.adoxsey.bioinformatics.gui;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.adoxsey.bioinformatics.model.Homologue;
 import org.adoxsey.bioinformatics.model.TargetGene;
 import org.adoxsey.bioinformatics.util.HomologueFinder;
 
@@ -35,16 +37,16 @@ public class HomePage implements Serializable {
             this.homologues = homologues;
         }
         
-        public String homologues(){
-            return homologueFinder.getHomologues(tGene);
+        public List<Homologue> homologues(){
+            return (List<Homologue>) homologueFinder.getHomologues(tGene);
         }
 
         public String about(){
             return "about";
         }
         
-        public String startProcess(){
-            tGene = homologueFinder.start();
-            return homologueFinder.getHomologues(tGene);
+        public List<Homologue> startProcess(){
+            //tGene = homologueFinder.start();
+            return (List<Homologue>) homologueFinder.getHomologues(tGene);
         }
 }
