@@ -31,6 +31,7 @@ public class GeneCreator {
     public TargetGene createTargetGene(String displayName) {
         DBRegistry ensemblgenomesRegistry = null;
         try {
+            System.out.println("Initiating connection to the database...");
             ensemblgenomesRegistry = new DBRegistry(DataSource.ENSEMBLDB);
         } catch (ConfigurationException e) {
             e.printStackTrace();
@@ -39,18 +40,21 @@ public class GeneCreator {
         }
 
         Coordinate.Strand targetStrand;
+        System.out.println("Retrieving the proper species...");
         DBSpecies species = (DBSpecies) ensemblgenomesRegistry.getSpeciesByAlias(Species_Alias);
         CoreDatabase cd = species.getMostRecentCoreDatabase();
         SingleSpeciesCoreDatabase dbCCD = (SingleSpeciesCoreDatabase) cd;
         DBDAOSingleSpeciesCoreFactory dbDAO = (DBDAOSingleSpeciesCoreFactory) dbCCD.getCoreFactory();
         DBGeneDAO dbGeneDAO = null;
         try {
+            System.out.println("Retrieving the gene DAO...");
             dbGeneDAO = dbDAO.getGeneDAO();
         } catch (DAOException e) {
             e.printStackTrace();
         }
         List<DAGene> daGenes = new ArrayList<DAGene>();
         try {
+            System.out.println("Retrieving gene(s) with display name " + displayName + "...");
             daGenes = dbGeneDAO.getGenesByExactName(displayName);
         } catch (DAOException e) {
             e.printStackTrace();

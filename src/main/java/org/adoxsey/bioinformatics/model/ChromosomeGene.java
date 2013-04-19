@@ -21,7 +21,22 @@ public class ChromosomeGene extends DAGene{
         private Integer coordStart;
         private Integer coordEnd;
         private DAChromosome chr;
+        private String bioType;
         
+        public String getBioType() {
+            return bioType;
+        }
+        public void setBioType(String bioType) {
+            this.bioType = bioType;
+        }
+        private DAGene daGene;
+        
+        public DAGene getDaGene() {
+            return daGene;
+        }
+        public void setDaGene(DAGene daGene) {
+            this.daGene = daGene;
+        }
         public Integer getChromCoordStart() {
             coordStart = coords.getStart();
             return coordStart;

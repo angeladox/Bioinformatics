@@ -16,7 +16,7 @@ import uk.ac.roslin.ensembl.model.Coordinate.Strand;
 
 @Component
 public class HomologueFinder {
-
+/*
     @Autowired
     private AllForwardGenes forward;
     @Autowired
@@ -57,5 +57,5 @@ public class HomologueFinder {
         return (List<Homologue>)newHomologues;
     }
 
-
+*/
 }

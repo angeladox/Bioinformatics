@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UpstreamFinder {
-    
+/*    
     private AllForwardGenes allForwardGenes;
     private AllReverseGenes allReverseGenes;
     
@@ -41,5 +41,5 @@ public class UpstreamFinder {
     public void findReverseUpstreamGene(TargetGene target){
         //if the smaller index of 
     }
-
+*/
 }
