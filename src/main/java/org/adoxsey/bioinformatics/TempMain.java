@@ -20,7 +20,7 @@ public class TempMain {
 
     public static void main(String[] args) {
         ApplicationContext context = 
-                new ClassPathXmlApplicationContext("mvc-dispatcher-servlet.xml");
+                new ClassPathXmlApplicationContext("applicationContext.xml");
         TempMain tm = (TempMain)context.getBean("TempMain");
         tm.start();
     }

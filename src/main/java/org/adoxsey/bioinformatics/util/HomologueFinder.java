@@ -14,7 +14,7 @@ import uk.ac.roslin.ensembl.datasourceaware.compara.DAHomologyPairRelationship;
 import uk.ac.roslin.ensembl.model.Coordinate;
 import uk.ac.roslin.ensembl.model.Coordinate.Strand;
 
-@Component
+//@Component
 public class HomologueFinder {
 /*
     @Autowired

@@ -32,6 +32,27 @@ public class Initializer {
     public Initializer(GeneCreator geneCreator) {
         this.geneCreator = geneCreator;
     }
+    
+    public String getSayWelcome() {
+        return "Beginning search for gene with display name " ;
+    }
+    
+    public String start(String targetGeneString){
+        TargetGene targetGene = null;
+        try {
+            targetGene = createGene(targetGeneString); // creates the target gene
+        } catch (NullPointerException e) {
+            System.out.println("Null target gene");
+        }
+        setAllForwardGenes(targetGene);
+        setAllReverseGenes(targetGene);
+        ChromosomeGene theUpstreamGene = findUpstreamPlusGene(targetGene, getAllForwardGenes(targetGene));
+        String returnString = "Upstream gene is " + theUpstreamGene.getChromDisplayName() + " with ID " + theUpstreamGene.getChromStableGeneID();
+        System.out.println(returnString);
+        return returnString;
+        //init.findUpstreamMinusGene(targetGene, init.getAllReverseGenes(targetGene))
+        
+    }
 
     public TargetGene createGene(String displayName) {
         TargetGene tGene = geneCreator.createTargetGene(displayName);
