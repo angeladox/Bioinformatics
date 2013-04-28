@@ -18,39 +18,40 @@ import uk.ac.roslin.ensembl.model.Mapping;
 
 @Component
 public class ChromosomeCreator {
-    
+
     AllForwardGenes allForwardGenes;
     AllReverseGenes allReverseGenes;
-    
+
     @Autowired
-    public ChromosomeCreator(AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes){
-        this.allForwardGenes=allForwardGenes;
-        this.allReverseGenes=allReverseGenes;
+    public ChromosomeCreator(AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes) {
+        this.allForwardGenes = allForwardGenes;
+        this.allReverseGenes = allReverseGenes;
     }
-    
-    public AllForwardGenes initializeForwardChromosomeGenes(TargetGene targetGene){
+
+    public AllForwardGenes initializeForwardChromosomeGenes(TargetGene targetGene) {
         DAChromosome chr = targetGene.getTargetChromosome();
         ArrayList<DAGene> DAGenesFwd = null;
         ArrayList<ChromosomeGene> chromGenesFwd = new ArrayList<ChromosomeGene>();
         try {
-            //We only get the upstream genes, that is, those that have indices LOWER than the target gene.
+            // We only get the upstream genes, that is, those that have indices
+            // LOWER than the target gene.
             System.out.println("Retrieving plus upstream genes...");
-            DAGenesFwd = (ArrayList<DAGene>)chr.getGenesOnRegion(1, targetGene.getCoordEnd(), Coordinate.Strand.FORWARD_STRAND);
+            DAGenesFwd = (ArrayList<DAGene>) chr.getGenesOnRegion(1, targetGene.getCoordEnd(), Coordinate.Strand.FORWARD_STRAND);
         } catch (DAOException e) {
             e.printStackTrace();
         }
         ArrayList<DAGene> removeGenes = new ArrayList<DAGene>();
-        for (DAGene gene: DAGenesFwd){
-            if(!gene.getBiotype().matches("protein_coding"))
-                removeGenes.add(gene);                              
+        for (DAGene gene : DAGenesFwd) {
+            if (!gene.getBiotype().matches("protein_coding"))
+                removeGenes.add(gene);
         }
-        for (DAGene removeGene: removeGenes){
-            DAGenesFwd.remove(removeGene); 
+        for (DAGene removeGene : removeGenes) {
+            DAGenesFwd.remove(removeGene);
         }
         Coordinate targetCoords = null;
         Mapping chromosomeMapping = null;
-        
-        for (DAGene gene:DAGenesFwd){
+
+        for (DAGene gene : DAGenesFwd) {
             try {
                 chromosomeMapping = gene.getChromosomeMapping();
             } catch (NonUniqueException e1) {
@@ -59,7 +60,7 @@ public class ChromosomeCreator {
             targetCoords = chromosomeMapping.getTargetCoordinates();
             ChromosomeGene chromosomeGene = new ChromosomeGene();
             chromosomeGene.setChromDisplayName(gene.getDisplayName());
-            chromosomeGene.setChromStableGeneID(gene.getStableID());           
+            chromosomeGene.setChromStableGeneID(gene.getStableID());
             chromosomeGene.setChromStrand(Coordinate.Strand.FORWARD_STRAND);
             chromosomeGene.setChromCoords(targetCoords);
             chromosomeGene.setChromCoordStart(targetCoords.getStart());
@@ -71,24 +72,31 @@ public class ChromosomeCreator {
         allForwardGenes.setForwardGenes(chromGenesFwd);
         return allForwardGenes;
     }
-    
-    public AllReverseGenes initializeReverseChromosomeGenes(TargetGene targetGene){
+
+    public AllReverseGenes initializeReverseChromosomeGenes(TargetGene targetGene) {
         DAChromosome chr = targetGene.getTargetChromosome();
         ArrayList<DAGene> DAGenesRvs = null;
         ArrayList<ChromosomeGene> chromGenesRvs = new ArrayList<ChromosomeGene>();
         try {
+            // We only get the upstream genes, that is, those that have indices
+            // LOWER than the target gene.
             System.out.println("Retrieving minus upstream genes...");
-            DAGenesRvs = (ArrayList<DAGene>)chr.getGenesOnRegion(1, targetGene.getCoordEnd(), Coordinate.Strand.REVERSE_STRAND);
+            DAGenesRvs = (ArrayList<DAGene>) chr.getGenesOnRegion(1, targetGene.getCoordEnd(), Coordinate.Strand.REVERSE_STRAND);
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        for (DAGene gene: DAGenesRvs){
-            //if(gene.getType()==psuedoGene) remove it //TODO: find pseudogene classification
+        ArrayList<DAGene> removeGenes = new ArrayList<DAGene>();
+        for (DAGene gene : DAGenesRvs) {
+            if (!gene.getBiotype().matches("protein_coding"))
+                removeGenes.add(gene);
+        }
+        for (DAGene removeGene : removeGenes) {
+            DAGenesRvs.remove(removeGene);
         }
         Coordinate targetCoords = null;
         Mapping chromosomeMapping = null;
-        
-        for (DAGene gene:DAGenesRvs){
+
+        for (DAGene gene : DAGenesRvs) {
             try {
                 chromosomeMapping = gene.getChromosomeMapping();
             } catch (NonUniqueException e1) {
@@ -96,14 +104,17 @@ public class ChromosomeCreator {
             }
             targetCoords = chromosomeMapping.getTargetCoordinates();
             ChromosomeGene chromosomeGene = new ChromosomeGene();
+            chromosomeGene.setChromDisplayName(gene.getDisplayName());
+            chromosomeGene.setChromStableGeneID(gene.getStableID());
             chromosomeGene.setChromStrand(Coordinate.Strand.REVERSE_STRAND);
             chromosomeGene.setChromCoords(targetCoords);
             chromosomeGene.setChromCoordStart(targetCoords.getStart());
             chromosomeGene.setChromCoordEnd(targetCoords.getEnd());
+            chromosomeGene.setBioType(gene.getBiotype());
+            chromosomeGene.setDaGene(gene);
             chromGenesRvs.add(chromosomeGene);
         }
         allReverseGenes.setReverseGenes(chromGenesRvs);
         return allReverseGenes;
     }
-
 }

@@ -3,9 +3,9 @@ package org.adoxsey.bioinformatics.util;
 import java.util.ArrayList;
 
 import org.adoxsey.bioinformatics.model.ChromosomeGene;
-import org.adoxsey.bioinformatics.model.Homologue;
 import org.adoxsey.bioinformatics.model.TargetGene;
 import org.adoxsey.bioinformatics.repository.AllForwardGenes;
+import org.adoxsey.bioinformatics.repository.AllReverseGenes;
 
 import uk.ac.roslin.ensembl.model.Coordinate;
 import uk.ac.roslin.ensembl.model.Coordinate.Strand;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IndexCalculator {
 
+    /*Returns the upstream plus gene*/
     public ChromosomeGene calculateForwardIndices(TargetGene target, AllForwardGenes allForwardGenes) {
         // AllForwardGenes should now only contain genes on the same chromosome
         // as the target gene
@@ -47,6 +48,41 @@ public class IndexCalculator {
 
     }
 
+    /*Returns the upstream minus gene*/
+    public ChromosomeGene calculateReverseIndices(TargetGene target, AllReverseGenes allReverseGenes) {
+        // AllReverseGenes should now only contain genes on the same chromosome
+        // as the target gene
+        // with indices less than the target gene and that are not pseudogenes.
+        ArrayList<ChromosomeGene> chromGenes = (ArrayList<ChromosomeGene>) allReverseGenes.getReverseGenes();
+
+        Coordinate targetCoords = target.getTargetCoords();
+        Integer targetStart = targetCoords.getStart();
+        Integer targetEnd = targetCoords.getEnd();
+        Strand targetStrand = target.getTargetStrand();
+        ChromosomeGene bestGene;
+        //if (chromGene.getChromDisplayName() != target.getTargetDisplayName()
+        if (chromGenes.get(0).getChromDisplayName()==target.getTargetDisplayName())
+            bestGene = chromGenes.get(1);
+        else
+            bestGene = chromGenes.get(0);
+
+        for (ChromosomeGene chromGene : chromGenes) {
+            if (chromGene.getChromStrand() != Strand.REVERSE_STRAND)
+                System.out.println("This is an improper calculation of a 'reverse strand' gene");
+            Integer chromGeneStart = chromGene.getChromCoordStart();
+            Integer chromGeneEnd = chromGene.getChromCoordEnd();
+
+            if ((calculateUpstreamMinus(targetStart, chromGeneStart)) < (calculateUpstreamMinus(targetStart, bestGene.getChromCoordEnd()))) {
+                String chromGeneDisplayName = chromGene.getChromDisplayName();
+                String targetGeneDisplayName = target.getTargetDisplayName();
+                if (!(chromGeneDisplayName.matches(targetGeneDisplayName)))
+                    bestGene = chromGene;
+            }
+
+        }
+        return bestGene;
+
+    }
     /*
      * (upstream/plus) In the 5' Flanking sequence (upstream) box, enter the
      * value you get by taking the target gene's smaller index minus the

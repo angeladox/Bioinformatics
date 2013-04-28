@@ -20,8 +20,8 @@ public class Initializer {
     private IndexCalculator indexCalculator;
 
     @Autowired
-    public Initializer(GeneCreator geneCreator, ChromosomeCreator chromosomeCreator, 
-            AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes, IndexCalculator indexCalculator) {
+    public Initializer(GeneCreator geneCreator, ChromosomeCreator chromosomeCreator, AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes,
+            IndexCalculator indexCalculator) {
         this.geneCreator = geneCreator;
         this.allForwardGenes = allForwardGenes;
         this.allReverseGenes = allReverseGenes;
@@ -32,26 +32,40 @@ public class Initializer {
     public Initializer(GeneCreator geneCreator) {
         this.geneCreator = geneCreator;
     }
-    
+
     public String getSayWelcome() {
-        return "Beginning search for gene with display name " ;
+        return "Beginning search for gene with display name ";
     }
-    
-    public String start(String targetGeneString){
+
+    public String getUpstreamPlus(String targetGeneString) {
         TargetGene targetGene = null;
         try {
-            targetGene = createGene(targetGeneString); // creates the target gene
+            targetGene = createGene(targetGeneString); // creates the target
+                                                       // gene
         } catch (NullPointerException e) {
             System.out.println("Null target gene");
         }
         setAllForwardGenes(targetGene);
-        setAllReverseGenes(targetGene);
-        ChromosomeGene theUpstreamGene = findUpstreamPlusGene(targetGene, getAllForwardGenes(targetGene));
-        String returnString = "Upstream gene is " + theUpstreamGene.getChromDisplayName() + " with ID " + theUpstreamGene.getChromStableGeneID();
+        ChromosomeGene theUpstreamPlusGene = findUpstreamPlusGene(targetGene, getAllForwardGenes(targetGene));
+        String returnString = "Upstream plus gene is " + theUpstreamPlusGene.getChromDisplayName() + " with ID " + theUpstreamPlusGene.getChromStableGeneID();
         System.out.println(returnString);
         return returnString;
-        //init.findUpstreamMinusGene(targetGene, init.getAllReverseGenes(targetGene))
-        
+
+    }
+    public String getUpstreamMinus(String targetGeneString) {
+        TargetGene targetGene = null;
+        try {
+            targetGene = createGene(targetGeneString); // creates the target
+                                                       // gene
+        } catch (NullPointerException e) {
+            System.out.println("Null target gene");
+        }
+        setAllReverseGenes(targetGene);
+        ChromosomeGene theUpstreamMinusGene = findUpstreamMinusGene(targetGene, getAllReverseGenes(targetGene));
+        String returnString = "Upstream minus gene is " + theUpstreamMinusGene.getChromDisplayName() + " with ID " + theUpstreamMinusGene.getChromStableGeneID();
+        System.out.println(returnString);
+        return returnString;
+
     }
 
     public TargetGene createGene(String displayName) {
@@ -78,13 +92,13 @@ public class Initializer {
     public void setAllReverseGenes(TargetGene gene) {
         allReverseGenes = chromosomeCreator.initializeReverseChromosomeGenes(gene);
     }
-    
-    public ChromosomeGene findUpstreamPlusGene(TargetGene gene, AllForwardGenes allForwardGenes){
+
+    public ChromosomeGene findUpstreamPlusGene(TargetGene gene, AllForwardGenes allForwardGenes) {
         return indexCalculator.calculateForwardIndices(gene, allForwardGenes);
     }
-    
-   /* public ChromosomeGene findUpstreamMinusGene(TargetGene gene, AllReverseGenes allReverseGenes){
-        return new indexCalculator.calculateReverseIndices(gene, allReverseGenes);
-    }*/
+
+    public ChromosomeGene findUpstreamMinusGene(TargetGene gene, AllReverseGenes allReverseGenes) {
+        return indexCalculator.calculateReverseIndices(gene, allReverseGenes);
+    }
 
 }
