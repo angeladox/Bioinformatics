@@ -23,7 +23,8 @@ public class SequenceRetriever {
     @Autowired
     AllReverseGenes allReverseGenes;
 
-    public ArrayList<DAGene> getSameSequence(TargetGene targetGene) {
+    public String getSameSequence(TargetGene targetGene) {
+        System.out.println("Retrieving same sequence...");
         ChromosomeGene sameGene = null;
         if (targetGene.getTargetStrand().equals(Strand.FORWARD_STRAND)) {
             sameGene = indexCalculator.calculateForwardIndices(targetGene, allForwardGenes);
@@ -34,7 +35,8 @@ public class SequenceRetriever {
         return getSequenceBetween(targetGene, sameGene);
     }
 
-    public ArrayList<DAGene> getEitherSequence(TargetGene targetGene) {
+    public String getEitherSequence(TargetGene targetGene) {
+        System.out.println("Retrieving either sequence...");
         ChromosomeGene eitherGene = null;
         if (targetGene.getTargetStrand().equals(Strand.FORWARD_STRAND)) {
             eitherGene = indexCalculator.calculateReverseIndices(targetGene, allReverseGenes);
@@ -45,14 +47,17 @@ public class SequenceRetriever {
         return getSequenceBetween(targetGene, eitherGene);
     }
 
-    private ArrayList<DAGene> getSequenceBetween(TargetGene targetGene, ChromosomeGene chromosomeGene) {
+    private String getSequenceBetween(TargetGene targetGene, ChromosomeGene chromosomeGene) {
         DAChromosome chr = targetGene.getTargetChromosome();
-        ArrayList<DAGene> DAGenes = new ArrayList<DAGene>();
+        String sequence = "";
+       /* ArrayList<DAGene> DAGenes = new ArrayList<DAGene>();
         try {
             DAGenes = (ArrayList<DAGene>) chr.getGenesOnRegion(targetGene.getCoordEnd(), chromosomeGene.getChromCoordEnd());
         } catch (DAOException e) {
             e.printStackTrace();
-        }
-        return DAGenes;
+        }*/
+        sequence = chr.getSequenceAsString(targetGene.getCoordEnd(), chromosomeGene.getChromCoordEnd());
+        return sequence;
+       // return DAGenes;
     }
 }

@@ -18,7 +18,6 @@
 <body>
 
 <h4>Generate Non-Coding Sequences for a Target Gene</h4>
-<a href="/CurationAutomation/generateFile/">Download the either file</a>
 
 	<form method="post"
 		action="/CurationAutomation/submit/">

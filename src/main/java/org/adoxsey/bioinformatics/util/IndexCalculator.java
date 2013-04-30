@@ -16,8 +16,7 @@ public class IndexCalculator {
 
     /*Returns the upstream plus gene*/
     public ChromosomeGene calculateForwardIndices(TargetGene target, AllForwardGenes allForwardGenes) {
-        // AllForwardGenes should now only contain genes on the same chromosome
-        // as the target gene
+        // AllForwardGenes should now only contain genes on the same chromosome as the target gene
         // with indices less than the target gene and that are not pseudogenes.
         ArrayList<ChromosomeGene> chromGenes = (ArrayList<ChromosomeGene>) allForwardGenes.getForwardGenes();
 
@@ -26,7 +25,6 @@ public class IndexCalculator {
         Integer targetEnd = targetCoords.getEnd();
         Strand targetStrand = target.getTargetStrand();
         ChromosomeGene bestGene;
-        //if (chromGene.getChromDisplayName() != target.getTargetDisplayName()
         if (chromGenes.get(0).getChromDisplayName()==target.getTargetDisplayName())
             bestGene = chromGenes.get(1);
         else
@@ -50,8 +48,7 @@ public class IndexCalculator {
 
     /*Returns the upstream minus gene*/
     public ChromosomeGene calculateReverseIndices(TargetGene target, AllReverseGenes allReverseGenes) {
-        // AllReverseGenes should now only contain genes on the same chromosome
-        // as the target gene
+        // AllReverseGenes should now only contain genes on the same chromosome as the target gene
         // with indices less than the target gene and that are not pseudogenes.
         ArrayList<ChromosomeGene> chromGenes = (ArrayList<ChromosomeGene>) allReverseGenes.getReverseGenes();
 

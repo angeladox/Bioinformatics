@@ -18,7 +18,19 @@
 <body>
 
 <h4>Submit</h4>
-<p>${chromosomeGene}</p>
+<%-- <p><b>The plus gene is </b></p>
+<p>${thePlusGene}</p>
+<br>
+<p><b>The minus gene is </b>${theMinusGene}</p> --%>
+<br>
+<p><!-- <b>The same sequence is: </b>  -->${sameSequence}</p>
+<br>
+<p><!-- <b>The either sequence is: </b> ${eitherSequence}</p>--> 
+
+<a href="/CurationAutomation/generateEitherFile/">Click here to generate the either file</a>
+
+
+
 
 </body>
 </html>
