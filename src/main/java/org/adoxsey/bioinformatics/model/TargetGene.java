@@ -10,7 +10,6 @@ import uk.ac.roslin.ensembl.datasourceaware.core.DAChromosome;
 import uk.ac.roslin.ensembl.datasourceaware.core.DAGene;
 import uk.ac.roslin.ensembl.model.Coordinate;
 
-@Component
 public class TargetGene extends DAGene{
     private static final long serialVersionUID = 1L;
     
@@ -51,19 +50,19 @@ public class TargetGene extends DAGene{
         return Stable_Gene_ID;
     }
     public void setTargetStableGeneID(String stable_Gene_ID) {
-        Stable_Gene_ID = stable_Gene_ID;
+        this.Stable_Gene_ID = stable_Gene_ID;
     }
     public String getTargetDisplayName() {
         return Display_Name;
     }
     public void setTargetDisplayName(String display_Name) {
-        Display_Name = display_Name;
+        this.Display_Name = display_Name;
     }
     public String getTargetSpeciesAlias() {
         return Species_Alias;
     }
     public void setTargetSpeciesAlias(String species_Alias) {
-        Species_Alias = species_Alias;
+        this.Species_Alias = species_Alias;
     }
     public DBSpecies getSpecies() {
         return species;

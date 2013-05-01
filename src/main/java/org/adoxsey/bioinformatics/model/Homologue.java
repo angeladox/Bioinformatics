@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import uk.ac.roslin.ensembl.model.Coordinate;
 
-@Component
 public class Homologue {
     
     private String stableID;

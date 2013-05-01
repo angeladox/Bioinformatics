@@ -6,13 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>autocurate</title>
-<link
-	href="http://fonts.googleapis.com/css?family=Arvo|Open+Sans:400,300,600,700"
-	rel="stylesheet" type="text/css" />
 <style>
 body {
 	margin: 0;
@@ -454,65 +449,22 @@ a:hover {
 		</div>
 	</div>
 	<div id="wrapper">
-		<!-- end #header -->
-		<div id="page">
-			<div id="page-bgtop">
-				<div id="page-bgbtm">
-					<div id="sidebar">
-						<ul>
-							<li>
-								<h2>Search For a Target Gene Here:</h2>
-								<div id="search">
-									<form method="post" action="/CurationAutomation/submit/">							
-										<div>
-											<h4>Gene Name:</h4><input type="text" name="targetGene" /> 
-											<br>
-											<h4>Species Name:</h4><input type="text" name="speciesName" /> 
-												<br><br>						
-											<input type="submit" value="Search for Upstream Genes"  class="button"/>
-											<br><br>
-										</div>
-									</form>									
-									
-								</div>
-							</li>
-							
-						</ul>
-					</div>
-					<!-- end #sidebar -->
-					<div id="content">
-						<div class="post">
-							<h2 class="title">
-								<a href="#">Welcome to AutoCurate</a>
-							</h2>
-							<p class="meta">
-								<span class="date">April 2013</span>
-							</p>
-							<div style="clear: both;">&nbsp;</div>
-							<div class="entry">
-								<p>
-									This is <strong>autocurate</strong>, a free curation automation tool that allows researchers
-									to discover noncoding regions of DNA with speed, accuracy, and consistency.
-								</p>
-								<p class="links">
-									<a href="#" class="button">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- end #content -->
-				</div>
-			</div>
-		</div>
-		<!-- end #page -->
-	</div>
-	<div id="footer">
+<h4>Results</h4>
+<p>Your target gene was ${targetGeneName}</p>
+<p>Your target gene strand was ${targetGeneStrand}</p>
+<p>Either upstream gene is ${eitherUpstreamGeneName}</p>
+<p>Either upstream gene strand is ${eitherUpstreamGeneStrand}</p>
+
+<br>
+<!-- 
+<a href="/CurationAutomation/generateEitherFile/">Click here to generate the either file</a> -->
+
+<div id="footer">
 		<p>
 			&copy; 2013 autocurate. |</a>
 			| Bioinformatics: University of Southern
 					Maine. Spring 2013.</a>
 		</p>
 	</div>
-	<!-- end #footer -->
 </body>
 </html>

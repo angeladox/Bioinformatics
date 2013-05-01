@@ -1,19 +1,17 @@
 package org.adoxsey.bioinformatics;
 
-import java.util.ArrayList;
-
 import org.adoxsey.bioinformatics.model.ChromosomeGene;
 import org.adoxsey.bioinformatics.model.TargetGene;
 import org.adoxsey.bioinformatics.repository.AllForwardGenes;
 import org.adoxsey.bioinformatics.repository.AllReverseGenes;
+import org.adoxsey.bioinformatics.repository.AllUpstreamGenes;
 import org.adoxsey.bioinformatics.util.ChromosomeCreator;
+import org.adoxsey.bioinformatics.util.EitherFinder;
 import org.adoxsey.bioinformatics.util.GeneCreator;
 import org.adoxsey.bioinformatics.util.IndexCalculator;
 import org.adoxsey.bioinformatics.util.SequenceRetriever;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import uk.ac.roslin.ensembl.datasourceaware.core.DAGene;
 
 @Component
 public class Initializer {
@@ -21,44 +19,100 @@ public class Initializer {
     private GeneCreator geneCreator;
     private AllForwardGenes allForwardGenes;
     private AllReverseGenes allReverseGenes;
+    private AllUpstreamGenes allUpstreamGenes;
     private ChromosomeCreator chromosomeCreator;
     private IndexCalculator indexCalculator;
     private SequenceRetriever sequenceRetriever;
+    private EitherFinder eitherFinder;
+    private ChromosomeGene eitherUpstreamGene;
 
     @Autowired
-    public Initializer(SequenceRetriever sequenceRetriever, GeneCreator geneCreator, ChromosomeCreator chromosomeCreator, AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes,
-            IndexCalculator indexCalculator) {
+    public Initializer(AllUpstreamGenes allUpstreamGenes, EitherFinder eitherFinder, SequenceRetriever sequenceRetriever, GeneCreator geneCreator,
+            ChromosomeCreator chromosomeCreator, AllForwardGenes allForwardGenes, AllReverseGenes allReverseGenes, IndexCalculator indexCalculator) {
         this.geneCreator = geneCreator;
         this.allForwardGenes = allForwardGenes;
         this.allReverseGenes = allReverseGenes;
         this.chromosomeCreator = chromosomeCreator;
         this.indexCalculator = indexCalculator;
         this.sequenceRetriever = sequenceRetriever;
+        this.eitherFinder = eitherFinder;
+        this.allUpstreamGenes = allUpstreamGenes;
     }
 
     public Initializer(GeneCreator geneCreator) {
         this.geneCreator = geneCreator;
     }
-    
-    public TargetGene start(String targetGeneString){
+
+    public TargetGene createGeneAndSetUpstreamGenes(String targetGeneString, String speciesNameString) {
         TargetGene targetGene = null;
         try {
-            targetGene = createGene(targetGeneString); 
+            targetGene = createGene(targetGeneString, speciesNameString);
         } catch (NullPointerException e) {
             System.out.println("Null target gene");
         }
-        setAllForwardGenes(targetGene);
-        setAllReverseGenes(targetGene);
+        setAllUpstreamGenes(targetGene);
         return targetGene;
     }
 
-    public String getSameSequenceString(TargetGene targetGene){
-        
+    private void setAllUpstreamGenes(TargetGene gene) {
+        allUpstreamGenes = chromosomeCreator.initializeUpstreamGenes(gene);
+    }
+
+    public ChromosomeGene setEitherUpstreamGene(TargetGene targetGene) {
+        if (allUpstreamGenes==null)
+            setAllUpstreamGenes(targetGene);
+        ChromosomeGene eitherUpstreamGene = eitherFinder.findEitherUpstreamGene(targetGene, allUpstreamGenes);
+        setEitherUpstreamGene(eitherUpstreamGene);
+        return eitherUpstreamGene;
+    }
+
+    public String getEitherUpstreamGeneName(TargetGene targetGene) {
+        if (eitherUpstreamGene == null)
+            setEitherUpstreamGene(targetGene);
+        return eitherUpstreamGene.getChromDisplayName();
+    }
+
+    public String getEitherUpstreamGeneStrand(TargetGene targetGene) {
+        if (eitherUpstreamGene == null)
+            setEitherUpstreamGene(targetGene);
+        return eitherUpstreamGene.getChromStrand().toString();
+    }
+
+    private void setEitherUpstreamGene(ChromosomeGene eitherUpstreamGene) {
+        this.eitherUpstreamGene = eitherUpstreamGene;
+    }
+
+    private TargetGene createGene(String displayName, String speciesName) {
+        TargetGene tGene = geneCreator.createTargetGene(displayName, speciesName);
+        return tGene;
+    }
+
+    private void setAllReverseGenes(TargetGene gene) {
+        allReverseGenes = chromosomeCreator.initializeReverseChromosomeGenes(gene);
+    }
+
+    private void setAllForwardGenes(TargetGene gene) {
+        allForwardGenes = chromosomeCreator.initializeForwardChromosomeGenes(gene);
+    }
+
+    private AllReverseGenes getAllReverseGenes(TargetGene gene) {
+        if (allReverseGenes == null)
+            allReverseGenes = chromosomeCreator.initializeReverseChromosomeGenes(gene);
+        return allReverseGenes;
+    }
+
+    private AllForwardGenes getAllForwardGenes(TargetGene gene) {
+        if (allForwardGenes == null)
+            allForwardGenes = chromosomeCreator.initializeForwardChromosomeGenes(gene);
+        return allForwardGenes;
+    }
+
+    public String getSameSequenceString(TargetGene targetGene) {
         String sameSequence = sequenceRetriever.getSameSequence(targetGene);
         return sameSequence;
     }
-    
-    public String getEitherSequenceString(TargetGene targetGene){
+
+    public String getEitherSequenceString(TargetGene targetGene) {
         String eitherSequence = sequenceRetriever.getEitherSequence(targetGene);
         return eitherSequence;
     }
@@ -70,37 +124,13 @@ public class Initializer {
         return returnString;
 
     }
+
     public String getUpstreamMinus(TargetGene targetGene) {
         ChromosomeGene theUpstreamMinusGene = findUpstreamMinusGene(targetGene, getAllReverseGenes(targetGene));
         String returnString = "Upstream minus gene is " + theUpstreamMinusGene.getChromDisplayName() + " with ID " + theUpstreamMinusGene.getChromStableGeneID();
         System.out.println(returnString);
         return returnString;
 
-    }
-
-    public TargetGene createGene(String displayName) {
-        TargetGene tGene = geneCreator.createTargetGene(displayName);
-        return tGene;
-    }
-
-    public AllForwardGenes getAllForwardGenes(TargetGene gene) {
-        if (allForwardGenes == null)
-            allForwardGenes = chromosomeCreator.initializeForwardChromosomeGenes(gene);
-        return allForwardGenes;
-    }
-
-    public void setAllForwardGenes(TargetGene gene) {
-        allForwardGenes = chromosomeCreator.initializeForwardChromosomeGenes(gene);
-    }
-
-    public AllReverseGenes getAllReverseGenes(TargetGene gene) {
-        if (allReverseGenes == null)
-            allReverseGenes = chromosomeCreator.initializeReverseChromosomeGenes(gene);
-        return allReverseGenes;
-    }
-
-    public void setAllReverseGenes(TargetGene gene) {
-        allReverseGenes = chromosomeCreator.initializeReverseChromosomeGenes(gene);
     }
 
     public ChromosomeGene findUpstreamPlusGene(TargetGene gene, AllForwardGenes allForwardGenes) {

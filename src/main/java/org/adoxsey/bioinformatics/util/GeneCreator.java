@@ -24,11 +24,7 @@ import uk.ac.roslin.ensembl.model.database.SingleSpeciesCoreDatabase;
 @Component
 public class GeneCreator {
 
-    private static String Stable_Gene_ID = "ENSG00000001626";
-
-    private static String Species_Alias = "human";
-
-    public TargetGene createTargetGene(String displayName) {
+    public TargetGene createTargetGene(String displayName, String speciesAlias) {
         DBRegistry ensemblgenomesRegistry = null;
         try {
             System.out.println("Initiating connection to the database...");
@@ -41,7 +37,7 @@ public class GeneCreator {
 
         Coordinate.Strand targetStrand;
         System.out.println("Retrieving the proper species...");
-        DBSpecies species = (DBSpecies) ensemblgenomesRegistry.getSpeciesByAlias(Species_Alias);
+        DBSpecies species = (DBSpecies) ensemblgenomesRegistry.getSpeciesByAlias(speciesAlias);
         CoreDatabase cd = species.getMostRecentCoreDatabase();
         SingleSpeciesCoreDatabase dbCCD = (SingleSpeciesCoreDatabase) cd;
         DBDAOSingleSpeciesCoreFactory dbDAO = (DBDAOSingleSpeciesCoreFactory) dbCCD.getCoreFactory();
@@ -59,10 +55,6 @@ public class GeneCreator {
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        /*
-         * List<TargetGene> genes = new ArrayList<TargetGene>(); for(DAGene
-         * gene: daGenes){ genes.add((TargetGene)gene); }
-         */
         DAGene g = daGenes.get(0);
         Coordinate targetCoords = null;
         Mapping chromosomeMapping = null;
@@ -78,9 +70,8 @@ public class GeneCreator {
         TargetGene tGene = new TargetGene();
         tGene.setTargetChromosome(chr);
         tGene.setTargetCoords(targetCoords);
-        tGene.setTargetStableGeneID(Stable_Gene_ID);
         tGene.setTargetDisplayName(displayName);
-        tGene.setTargetSpeciesAlias(Species_Alias);
+        tGene.setTargetSpeciesAlias(speciesAlias);
         tGene.setTargetGene(g);
         tGene.setTargetSpecies(species);
         tGene.setTargetStrand(targetStrand);
