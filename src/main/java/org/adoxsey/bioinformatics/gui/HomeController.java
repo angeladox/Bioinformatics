@@ -45,13 +45,18 @@ public class HomeController extends MultiActionController {
 		System.out.println("div is " + div);
 		Map<String, Object> modelMap = new TreeMap<String, Object>();
 		int i = 0;
+		int j = 0;
+		String eitherUpstreamSubsequence = "";
 		while (i <= div) {
-			//eitherUpstreamSequence = eitherUpstreamSequence.substring(i, i + 59);
-			//System.out.println("sequence is " + eitherUpstreamSequence);
-			// modelMap.put("eitherUpstreamSequence" + i,
-			// eitherUpstreamSequence);
-			System.out.println("Dividing sequence is at " + i);
-			i++;
+			while (j<=div){
+			eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + 60);
+			System.out.println("sequence is " + eitherUpstreamSequence);
+			modelMap.put("eitherUpstreamSequence" + i, eitherUpstreamSubsequence);
+			System.out.println("Dividing sequence is at nucleotide " + i);
+			System.out.println("Label sequence is at " + j);
+			i=i+60;
+			j++;
+			}
 		}
 
 		/*
