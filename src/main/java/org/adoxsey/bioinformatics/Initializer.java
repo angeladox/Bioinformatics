@@ -24,7 +24,9 @@ public class Initializer {
     private IndexCalculator indexCalculator;
     private SequenceRetriever sequenceRetriever;
     private EitherFinder eitherFinder;
+    
     private ChromosomeGene eitherUpstreamGene;
+    private TargetGene targetGene;
 
     @Autowired
     public Initializer(AllUpstreamGenes allUpstreamGenes, EitherFinder eitherFinder, SequenceRetriever sequenceRetriever, GeneCreator geneCreator,
@@ -50,8 +52,17 @@ public class Initializer {
         } catch (NullPointerException e) {
             System.out.println("Null target gene");
         }
+        setTargetGene(targetGene);
         setAllUpstreamGenes(targetGene);
         return targetGene;
+    }
+    
+    private void setTargetGene(TargetGene targetGene){
+        this.targetGene=targetGene;
+    }
+    
+    public String getTargetGeneStableId(){
+        return this.targetGene.getTargetStableGeneID();
     }
 
     private void setAllUpstreamGenes(TargetGene gene) {
@@ -65,7 +76,17 @@ public class Initializer {
         setEitherUpstreamGene(eitherUpstreamGene);
         return eitherUpstreamGene;
     }
+    
+    public String getEitherSequenceString(TargetGene targetGene) {
+        if (eitherUpstreamGene == null)
+            setEitherUpstreamGene(targetGene);       
+        return sequenceRetriever.getSequenceBetween(targetGene, eitherUpstreamGene);
+    }
 
+    public int getEitherSequenceLength(){
+    	return sequenceRetriever.getSequenceLength();
+    }
+    
     public String getEitherUpstreamGeneName(TargetGene targetGene) {
         if (eitherUpstreamGene == null)
             setEitherUpstreamGene(targetGene);
@@ -77,10 +98,21 @@ public class Initializer {
             setEitherUpstreamGene(targetGene);
         return eitherUpstreamGene.getChromStrand().toString();
     }
+    
+    public String getEitherUpstreamGeneStableId(TargetGene targetGene) {
+        if (eitherUpstreamGene == null)
+            setEitherUpstreamGene(targetGene);
+        return eitherUpstreamGene.getChromStableGeneID();
+    }
+    
+    public String getEitherUpstreamGeneStableId() {
+        return this.eitherUpstreamGene.getChromStableGeneID();
+    }
 
     private void setEitherUpstreamGene(ChromosomeGene eitherUpstreamGene) {
         this.eitherUpstreamGene = eitherUpstreamGene;
     }
+
 
     private TargetGene createGene(String displayName, String speciesName) {
         TargetGene tGene = geneCreator.createTargetGene(displayName, speciesName);
@@ -110,11 +142,6 @@ public class Initializer {
     public String getSameSequenceString(TargetGene targetGene) {
         String sameSequence = sequenceRetriever.getSameSequence(targetGene);
         return sameSequence;
-    }
-
-    public String getEitherSequenceString(TargetGene targetGene) {
-        String eitherSequence = sequenceRetriever.getEitherSequence(targetGene);
-        return eitherSequence;
     }
 
     public String getUpstreamPlus(TargetGene targetGene) {

@@ -445,7 +445,7 @@ a:hover {
 		<div id="header">
 			<div id="logo">
 				<h1>
-					<a href="#">Auto<span>Curate</span></a>
+					<a href="/autocurate/about">Auto<span>Curate</span></a>
 				</h1>
 				<p>
 					automated curation of genetic data to discover noncoding DNA sequences</a>
@@ -463,7 +463,7 @@ a:hover {
 							<li>
 								<h2>Search For a Target Gene Here:</h2>
 								<div id="search">
-									<form method="post" action="/CurationAutomation/submit/">							
+									<form method="post" action="/autocurate/submit">							
 										<div>
 											<h4>Gene Name:</h4><input type="text" name="targetGene" /> 
 											<br>

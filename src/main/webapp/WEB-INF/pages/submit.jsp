@@ -448,20 +448,17 @@ a:hover {
 			</div>
 		</div>
 	</div>
-	<div id="wrapper">
+<div id="wrapper">
 <h4>Results</h4>
 <p>Your target gene was ${targetGeneName}</p>
 <p>Your target gene strand was ${targetGeneStrand}</p>
-<p>Either upstream gene is ${eitherUpstreamGeneName}</p>
+<%-- <p>Either upstream gene is ${eitherUpstreamGeneName}</p>
 <p>Either upstream gene strand is ${eitherUpstreamGeneStrand}</p>
-
-<br>
-<!-- 
-<a href="/CurationAutomation/generateEitherFile/">Click here to generate the either file</a> -->
-
+<p>Sequencing between ${targetGeneName} and ${eitherUpstreamGeneName}:</p>
+<p><i>${eitherUpstreamSequence0}</i></p> --%>
+</div>
 <div id="footer">
-		<p>
-			&copy; 2013 autocurate. |</a>
+		<p> &copy; 2013 autocurate. |</a>
 			| Bioinformatics: University of Southern
 					Maine. Spring 2013.</a>
 		</p>

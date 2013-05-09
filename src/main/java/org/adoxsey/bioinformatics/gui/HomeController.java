@@ -18,43 +18,54 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 @Controller
 public class HomeController extends MultiActionController {
 
-    @Autowired
-    private Initializer init;
+	@Autowired
+	private Initializer init;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("home");
-    }
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Rendering home view");
+		return new ModelAndView("home");
+	}
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public ModelAndView submit(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
+	public ModelAndView submit(HttpServletRequest request, HttpServletResponse response) {
 
-        String targetGeneString = request.getParameter("targetGene");
-        String speciesNameString = request.getParameter("speciesName");
-        TargetGene targetGene = init.createGeneAndSetUpstreamGenes(targetGeneString, speciesNameString);
-        
-        String targetGeneName = targetGene.getTargetDisplayName();
-        String targetGeneStrand = targetGene.getTargetStrand().toString();
-        String eitherUpstreamGeneName = init.getEitherUpstreamGeneName(targetGene);
-        String eitherUpstreamGeneStrand = init.getEitherUpstreamGeneStrand(targetGene);
+		String targetGeneString = request.getParameter("targetGene");
+		String speciesNameString = request.getParameter("speciesName");
+		TargetGene targetGene = init.createGeneAndSetUpstreamGenes(targetGeneString, speciesNameString);
 
-        Map<String, Object> modelMap = new TreeMap<String, Object>();
-        modelMap.put("eitherUpstreamGeneName", eitherUpstreamGeneName);
-        modelMap.put("eitherUpstreamGeneStrand", eitherUpstreamGeneStrand);
-        modelMap.put("targetGeneName", targetGeneName);
-        modelMap.put("targetGeneStrand", targetGeneStrand);
+		String targetGeneName = targetGene.getTargetDisplayName();
+		String targetGeneStrand = targetGene.getTargetStrand().toString();
+		String eitherUpstreamGeneName = init.getEitherUpstreamGeneName(targetGene);
+		String eitherUpstreamGeneStrand = init.getEitherUpstreamGeneStrand(targetGene);
+		String eitherUpstreamSequence = init.getEitherSequenceString(targetGene);
+		int eitherUpstreamSequenceLength = init.getEitherSequenceLength();
+		System.out.println("length is " + eitherUpstreamSequenceLength);
+		int div = (int) Math.floor(eitherUpstreamSequenceLength / 60);
+		System.out.println("div is " + div);
+		Map<String, Object> modelMap = new TreeMap<String, Object>();
+		int i = 0;
+		while (i <= div) {
+			//eitherUpstreamSequence = eitherUpstreamSequence.substring(i, i + 59);
+			//System.out.println("sequence is " + eitherUpstreamSequence);
+			// modelMap.put("eitherUpstreamSequence" + i,
+			// eitherUpstreamSequence);
+			System.out.println("Dividing sequence is at " + i);
+			i++;
+		}
 
-        return new ModelAndView("submit", modelMap);
-    }
+		/*
+		 * modelMap.put("eitherUpstreamGeneName", eitherUpstreamGeneName);
+		 * modelMap.put("eitherUpstreamGeneStrand", eitherUpstreamGeneStrand);
+		 */
+		modelMap.put("targetGeneName", targetGeneName);
+		modelMap.put("targetGeneStrand", targetGeneStrand);
+		System.out.println("Rendering submit view");
+		return new ModelAndView("submit", modelMap);
+	}
 
-    @RequestMapping(value = "/generateEitherFile", method = RequestMethod.GET)
-    public ModelAndView generateEitherFile(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("home");
-    }
-
-    @RequestMapping(value = "/about", method = RequestMethod.GET)
-    public ModelAndView about(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("about");
-    }
-
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public ModelAndView about(HttpServletRequest request, HttpServletResponse response) {
+		return new ModelAndView("about");
+	}
 }
