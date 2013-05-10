@@ -50,10 +50,10 @@ public class HomeController extends MultiActionController {
 		while (i <= div) {
 			while (j<=div){
 			eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + 60);
-			System.out.println("sequence is " + eitherUpstreamSequence);
+			//System.out.println("sequence is " + eitherUpstreamSequence);
 			modelMap.put("eitherUpstreamSequence" + i, eitherUpstreamSubsequence);
-			System.out.println("Dividing sequence is at nucleotide " + i);
-			System.out.println("Label sequence is at " + j);
+			//System.out.println("Dividing sequence is at nucleotide " + i);
+			//System.out.println("Label sequence is at " + j);
 			i=i+60;
 			j++;
 			}

@@ -33,6 +33,9 @@ public class EitherFinder {
             bestGene = allUpstreamGenesList.get(0);
 
         for (ChromosomeGene upstreamGene : allUpstreamGenesList) {
+        	if (upstreamGene.getChromDisplayName().toLowerCase().matches(target.getTargetDisplayName().toLowerCase())){
+        		System.out.println("upstream matches target");
+        	}
             Integer upstreamSmallerIndex = upstreamGene.getChromCoordStart();
             Integer upstreamLargerIndex = upstreamGene.getChromCoordEnd();
             Integer bestLargerIndex = bestGene.getChromCoordEnd();
@@ -53,8 +56,8 @@ public class EitherFinder {
             }
 
             if (upstreamIndexCalculation < bestIndexCalculation) {
-                String upstreamGeneDisplayName = upstreamGene.getChromDisplayName();
-                String targetGeneDisplayName = target.getTargetDisplayName();
+                String upstreamGeneDisplayName = upstreamGene.getChromDisplayName().toLowerCase();
+                String targetGeneDisplayName = target.getTargetDisplayName().toLowerCase();
                 if (!(upstreamGeneDisplayName.matches(targetGeneDisplayName)))
                     bestGene = upstreamGene;
             }
