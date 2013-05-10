@@ -31,9 +31,12 @@ public class HomeController extends MultiActionController {
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public ModelAndView submit(HttpServletRequest request, HttpServletResponse response) {
-
+		try{
 		String targetGeneString = request.getParameter("targetGene");
 		String speciesNameString = request.getParameter("speciesName");
+		if((targetGeneString.isEmpty())||(targetGeneString==null)||(speciesNameString==null)||speciesNameString.isEmpty()){
+			return new ModelAndView("home");
+		}
 		TargetGene targetGene = init.createGeneAndSetUpstreamGenes(targetGeneString, speciesNameString);
 
 		String targetGeneName = targetGene.getTargetDisplayName();
@@ -67,7 +70,6 @@ public class HomeController extends MultiActionController {
 				j++;
 			}
 		}
-		//>ENSG00000154438:ENST00000284629 cdna:KNOWN_protein_coding
 		modelMap.put("targetStableID", targetStableID);
 		modelMap.put("upstreamStableID", upstreamStableID);
         modelMap.put("entireSequence", entireSequence);
@@ -77,6 +79,10 @@ public class HomeController extends MultiActionController {
 		modelMap.put("targetGeneStrand", targetGeneStrand);
 		System.out.println("Rendering submit view");
 		return new ModelAndView("submit", modelMap);
+		}
+		catch(Exception e){
+			return new ModelAndView("error");
+		}
 	}
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
