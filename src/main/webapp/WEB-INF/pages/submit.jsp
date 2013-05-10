@@ -428,9 +428,9 @@ a:hover {
 	<div id="menu-wrapper">
 		<div id="menu">
 			<ul>
-				<li class="current_page_item"><a href="#">Homepage</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Links</a></li>
+				<li><a href="/autocurate/">Homepage</a></li>
+				<li><a href="/autocurate/about">About</a></li>
+				<li><a href="/autocurate/ensemblInstructions">Links</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->

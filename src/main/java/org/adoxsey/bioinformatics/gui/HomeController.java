@@ -89,4 +89,9 @@ public class HomeController extends MultiActionController {
 	public ModelAndView about(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("about");
 	}
+	
+	@RequestMapping(value = "/ensemblInstructions", method = RequestMethod.GET)
+    public ModelAndView ensemblInstructions(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("ensemblInstructions");
+    }
 }

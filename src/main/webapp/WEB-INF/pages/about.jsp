@@ -428,9 +428,9 @@ a:hover {
 	<div id="menu-wrapper">
 		<div id="menu">
 			<ul>
-				<li><a href="">Homepage</a></li>
-				<li><a href="autocurate/about">About</a></li>
-				<li><a href="autocurate/ensemblInstructions">Links</a></li>
+				<li><a href="/autocurate/">Homepage</a></li>
+				<li><a href="/autocurate/about">About</a></li>
+				<li><a href="/autocurate/ensemblInstructions">Links</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->
@@ -439,12 +439,15 @@ a:hover {
 	<div id="header-wrapper">
 		<div id="header">
 			<div id="logo">
-				<h1> about Auto<span>Curate</span></h1>
+				<h1>
+					<a href="/autocurate/about">Auto<span>Curate</span></a>
+				</h1>
+				<p>
+					automated curation of genetic data to discover noncoding DNA sequences</a>
+				</p>
 			</div>
 		</div>
 	</div>
-<div id="wrapper">
-</head>
 <h3><b>Background</b></h3>
 <br>
 

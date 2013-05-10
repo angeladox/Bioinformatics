@@ -429,11 +429,11 @@ a:hover {
 }
 </style>
 </head>
-<body>
+	<body>
 	<div id="menu-wrapper">
 		<div id="menu">
 			<ul>
-				<li class="current_page_item"><a href="#">Homepage</a></li>
+				<li><a href="/autocurate/">Homepage</a></li>
 				<li><a href="/autocurate/about">About</a></li>
 				<li><a href="/autocurate/ensemblInstructions">Links</a></li>
 			</ul>
@@ -453,50 +453,167 @@ a:hover {
 			</div>
 		</div>
 	</div>
-	<div id="wrapper">
-		<!-- end #header -->
-		<div id="page">
-			<div id="page-bgtop">
-				<div id="page-bgbtm">
-					<div id="sidebar">
-						<ul>
-							<li>
-								<h2>Search For a Target Gene Here:</h2>
-								<div id="search">
-									<form method="post" action="/autocurate/submit">							
-										<div>
-											<h4>Gene Name:</h4><input type="text" name="targetGene" /> 
-											<br>
-											<h4>Species Name:</h4><input type="text" name="speciesName" /> 
-												<br><br>						
-											<input type="submit" value="Search for Upstream Genes"  class="button"/>
-											<br><br>
-										</div>
-									</form>									
-									
-								</div>
-							</li>
-							
-						</ul>
-					</div>
-					<!-- end #sidebar -->
-					<div id="content">
-						<div class="post">
-							<h2 class="title">
-								<a href="#">Welcome to AutoCurate</a>
-							</h2>
-							<p class="meta">
-								<span class="date">April 2013</span>
-							</p>
-							<div style="clear: both;">&nbsp;</div>
-							<div class="entry">
-								<p>
-									This is <strong>autocurate</strong>, a free curation automation tool that allows researchers
-									to discover noncoding regions of DNA with speed, accuracy, and consistency.
+<h3><b>Curation Notes for Ensembl</b></h3>
+Jeffrey Thompson
+
+Thu Aug  9 08:53:19 EDT 2012
+Updated Fri Nov 2 13:30:41 EDT 2012 describing how to find end of scaffold.
+Updated Fri Jan 18 09:55:24 EST 2013 to add clearer instructions for 
+handling cases when there is no upstream or downstream gene.
+
+The point of this curation protocol is to search for a target gene in the
+Ensembl database, find the gene upstream (or downstream) of it and use
+the indices of both genes to download the DNA sequence between them.
+
+With each curation we create two sets of files:
+* A set of files named <speciesName>.either.txt
+* A set of files named <speciesName>.same.txt
+
+The 'either' files include the sequence between the target and the
+next gene upstream of it no matter which strand it occurs on. The
+'same' files include the sequence between the target gene and the next
+gene upstream of it on the same strand it is on.
+
+When determining which gene is the 'next', skip over pseudo-genes and
+partial genes.
+
+Save original files and notes from all curators, even after the files
+have been compared.
+---------------------------------------------------------------------
+
+1) Goto lhttp://useast.ensembl.org/index.htm.
+
+2) Type the abbreviation for the target gene into the search box near
+   the top left of the page (e.g. CFTR) and hit Enter.
+
+3) Click on any of the species under the 'By Species' list at the
+   right of the page (e.g. Alpaca). Then click 'Gene'.
+
+4) Now you should see a list of genes related to the search term. The
+   first one is usually the target of the search. Click its heading
+   (e.g. CFTR).
+
+5) There is a menu with heading 'Gene-based displays' at the top left
+   of the page. Under the 'Comparative Genomics' heading click
+   'Orthologous.'
+
+6) Under the heading 'Summary of orthologues of this gene' there is a
+   list of species sets. Check the 'Show details' box for any species
+   sets you are interested in (e.g. Fish).
+
+7) Scroll to the bottom of the page to see a list of orthologous genes
+   to the one you originally selected (e.g. fish species with
+   CFTR). Now click the link under 'Ensembl identifier & gene name' to
+   be taken to a display for that species.
+
+8) Under 'Gene summary' near the bottom segment of the page there is
+   now a graphical display of the gene. The target will be highlighted
+   in green (even if its identifier is different than the one you
+   searched for). Click the gene to see info about its location and strand.
+
+9) Click the black and white bar at the top of the gene display and
+   click 'Jump to location view.'
+
+10) Under 'Region in detail' heading, click the gene to find its
+    indices. Make a note of them.
+
+11) Now click the gene upstream of your target and find its indices
+    (if there is no upstream gene, look immediately beneath
+    the gene display and note the ending index of the scaffold).
+
+12) Click the target gene again and click the link by 'Gene.'
+
+13) Click the 'Export data' button at the left of the page.
+
+14) Now make sure the following options are selected: 
+    * 'FASTA sequence' 
+    * 'Feature strand'. 
+
+    If you need to find scaffold indices for any of the instructions below,
+    there are extra instructions at the end of this document.
+
+    Next, if your gene is on the plus strand and you want the upstream
+    region, go to step 14a.  If your gene is on the plus strand and
+    you want the downstream region, go to step 14b.  If your gene is
+    on the minus strand and you want the upstream region, go to step
+    14c.  If your gene is on the minus strand and you want the
+    downstream region, go to step 14d.
+
+    In the 5' Flanking sequence (upstream) box enter the amount of
+    upstream sequence to retrieve. Calculate it in the following way: if you
+
+14a) (upstream/plus) In the 5' Flanking sequence (upstream) box, enter
+     the value you get by taking the target gene's smaller index minus
+     the upstream gene's larger index minus 1 (if no upstream gene, then use
+     the target gene's smaller index minus 1). For example, if the target gene
+     gene had a smaller index of 100 and the upstream gene had a larger index
+     of 50, then you would enter 49, because 100 - 50 - 1 = 49.
+
+     Under 'Options for FASTA sequence' make sure the 'Genomic' drop
+     down box says '5' Flanking sequence'. The rest of the boxes
+     should be unchecked.
+
+     Finally, click 'Next'.
+
+     Go to step 15.
+
+14b) (downstream/plus) In the 3' Flanking sequence (downstream) box,
+     enter the value you get by taking the downstream gene's smaller
+     index minus the target gene's larger index minus 1 (if no 
+     downstream gene, then use the end index of the scaffold minus
+     the target gene's larger index).
+
+     Under 'Options for FASTA sequence' make sure the 'Genomic' drop
+     down box says '3' Flanking sequence'. The rest of the boxes
+     should be unchecked.
+
+     Finally, click 'Next'.
+
+     Go to step 15.
+
+14c) (upstream/minus) In the 5' Flanking sequence (upstream) box,
+     enter the value you get by taking the upstream gene's smaller
+     index minus the target gene's larger index minus 1 (if no 
+     upstream gene, then use the scaffold's end index minus target 
+     gene's larger index).
+
+     Under 'Options for FASTA sequence' make sure the 'Genomic' drop
+     down box says '5' Flanking sequence'. The rest of the boxes
+     should be unchecked.
+
+     Finally, click 'Next'.
+
+     Go to step 15.
+
+14d) (downstream/minus) In the 3' Flanking sequence (downstream) box,
+     enter the value you get by taking the downstream gene's larger
+     index minus the target gene's smaller index minus 1 (if no
+     downstream gene, use the target gene's smaller index minus 1).
+
+     Under 'Options for FASTA sequence' make sure the 'Genomic' drop
+     down box says '3' Flanking sequence'. The rest of the boxes
+     should be unchecked.
+
+     Finally, click 'Next'.
+
+     Go to step 15.
+
+15) On the 'Export data' window that appears, click 'Text'. Copy and
+    paste the resulting sequence to save it.
+
+--------------------------------------------------------------------
+
+Extra Instructions:
+
+How to find the scaffold indices.
+
+In the location view, if you need to know where the end of a scaffold is, look
+at the location box (it is the second box down from the top of 'Region in
+detail'. Remove the second index in the range and enter 9999999999, then click
+'Go'. Ensembl will update the page and automatically change the second index
+to the end of the scaffold.
 								</p>
-								<p class="links">
-									<a href="#" class="button">Read More</a>
-								</p>
+								
 							</div>
 						</div>
 					</div>
