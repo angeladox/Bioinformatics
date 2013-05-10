@@ -454,7 +454,7 @@ a:hover {
 <p>Your target gene strand was ${targetGeneStrand}</p>
 <p>Either upstream gene is ${eitherUpstreamGeneName}</p>
 <p>Either upstream gene strand is ${eitherUpstreamGeneStrand}</p>
-<p>Sequencing between ${targetGeneName} and ${eitherUpstreamGeneName}:</p>
+<p>>${upstreamStableID}:${targetStableID} cdna:KNOWN_protein_coding:</p>
 <table>
 		<c:forEach var="entireSequence" items="${entireSequence}">
 			<tr>

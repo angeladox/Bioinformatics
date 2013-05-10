@@ -66,7 +66,7 @@ public class GeneCreator {
         targetStrand = chromosomeMapping.getTargetCoordinates().getStrand();
         DAChromosome chr = (DAChromosome) chromosomeMapping.getTarget();
         targetCoords = chromosomeMapping.getTargetCoordinates();
-
+        String stableId = g.getStableID();
         TargetGene tGene = new TargetGene();
         tGene.setTargetChromosome(chr);
         tGene.setTargetCoords(targetCoords);
@@ -75,6 +75,7 @@ public class GeneCreator {
         tGene.setTargetGene(g);
         tGene.setTargetSpecies(species);
         tGene.setTargetStrand(targetStrand);
+        tGene.setTargetStableGeneID(stableId);
 
         return tGene;
     }

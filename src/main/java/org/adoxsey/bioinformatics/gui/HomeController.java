@@ -40,6 +40,8 @@ public class HomeController extends MultiActionController {
 		String targetGeneStrand = targetGene.getTargetStrand().toString();
 		String eitherUpstreamGeneName = init.getEitherUpstreamGeneName(targetGene);
 		String eitherUpstreamGeneStrand = init.getEitherUpstreamGeneStrand(targetGene);
+		String targetStableID = init.getTargetGeneStableId();
+		String upstreamStableID = init.getEitherUpstreamGeneStableId();
 		String eitherUpstreamSequence = init.getEitherSequenceString(targetGene);
 		int eitherUpstreamSequenceLength = init.getEitherSequenceLength();
 		System.out.println("length is " + eitherUpstreamSequenceLength);
@@ -65,7 +67,9 @@ public class HomeController extends MultiActionController {
 				j++;
 			}
 		}
-
+		//>ENSG00000154438:ENST00000284629 cdna:KNOWN_protein_coding
+		modelMap.put("targetStableID", targetStableID);
+		modelMap.put("upstreamStableID", upstreamStableID);
         modelMap.put("entireSequence", entireSequence);
 		modelMap.put("eitherUpstreamGeneName", eitherUpstreamGeneName);
 		modelMap.put("eitherUpstreamGeneStrand", eitherUpstreamGeneStrand);		 
