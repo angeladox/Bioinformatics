@@ -41,21 +41,28 @@ public class HomeController extends MultiActionController {
 		String eitherUpstreamSequence = init.getEitherSequenceString(targetGene);
 		int eitherUpstreamSequenceLength = init.getEitherSequenceLength();
 		System.out.println("length is " + eitherUpstreamSequenceLength);
-		int div = (int) Math.floor(eitherUpstreamSequenceLength / 60);
+		int div = (int) Math.ceil(eitherUpstreamSequenceLength / 60);
 		System.out.println("div is " + div);
 		Map<String, Object> modelMap = new TreeMap<String, Object>();
 		int i = 0;
 		int j = 0;
 		String eitherUpstreamSubsequence = "";
 		while (i <= div) {
-			while (j<=div){
-			eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + 60);
-			//System.out.println("sequence is " + eitherUpstreamSequence);
-			modelMap.put("eitherUpstreamSequence" + i, eitherUpstreamSubsequence);
-			//System.out.println("Dividing sequence is at nucleotide " + i);
-			//System.out.println("Label sequence is at " + j);
-			i=i+60;
-			j++;
+			while (j <= div) {
+				if (i + 60 >= eitherUpstreamSequenceLength) {
+					int diff = (i+60)-eitherUpstreamSequenceLength;
+					eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + diff);
+					break;
+				}
+
+				eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + 60);
+				// System.out.println("sequence is " + eitherUpstreamSequence);
+				modelMap.put("eitherUpstreamSequence" + i, eitherUpstreamSubsequence);
+				// System.out.println("Dividing sequence is at nucleotide " +
+				// i);
+				// System.out.println("Label sequence is at " + j);
+				i = i + 60;
+				j++;
 			}
 		}
 
