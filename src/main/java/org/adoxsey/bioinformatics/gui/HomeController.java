@@ -1,5 +1,7 @@
 package org.adoxsey.bioinformatics.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -47,30 +49,27 @@ public class HomeController extends MultiActionController {
 		int i = 0;
 		int j = 0;
 		String eitherUpstreamSubsequence = "";
+		List<String> entireSequence = new ArrayList<String>();
+		
 		while (i <= div) {
 			while (j <= div) {
 				if (i + 60 >= eitherUpstreamSequenceLength) {
 					int diff = (i+60)-eitherUpstreamSequenceLength;
 					eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + diff);
+					entireSequence.add(eitherUpstreamSubsequence);
 					break;
 				}
-
 				eitherUpstreamSubsequence = eitherUpstreamSequence.substring(i, i + 60);
-				// System.out.println("sequence is " + eitherUpstreamSequence);
-				modelMap.put("eitherUpstreamSequence" + i, eitherUpstreamSubsequence);
-				// System.out.println("Dividing sequence is at nucleotide " +
-				// i);
-				// System.out.println("Label sequence is at " + j);
+				entireSequence.add(eitherUpstreamSubsequence);
 				i = i + 60;
 				j++;
 			}
 		}
 
-		/*
-		 * modelMap.put("eitherUpstreamGeneName", eitherUpstreamGeneName);
-		 * modelMap.put("eitherUpstreamGeneStrand", eitherUpstreamGeneStrand);
-		 */
-		modelMap.put("targetGeneName", targetGeneName);
+        modelMap.put("entireSequence", entireSequence);
+		modelMap.put("eitherUpstreamGeneName", eitherUpstreamGeneName);
+		modelMap.put("eitherUpstreamGeneStrand", eitherUpstreamGeneStrand);		 
+		modelMap.put("targetGeneName", targetGeneName.toUpperCase());
 		modelMap.put("targetGeneStrand", targetGeneStrand);
 		System.out.println("Rendering submit view");
 		return new ModelAndView("submit", modelMap);

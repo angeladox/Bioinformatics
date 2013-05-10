@@ -452,10 +452,16 @@ a:hover {
 <h4>Results</h4>
 <p>Your target gene was ${targetGeneName}</p>
 <p>Your target gene strand was ${targetGeneStrand}</p>
-<%-- <p>Either upstream gene is ${eitherUpstreamGeneName}</p>
+<p>Either upstream gene is ${eitherUpstreamGeneName}</p>
 <p>Either upstream gene strand is ${eitherUpstreamGeneStrand}</p>
 <p>Sequencing between ${targetGeneName} and ${eitherUpstreamGeneName}:</p>
-<p><i>${eitherUpstreamSequence0}</i></p> --%>
+<table>
+		<c:forEach var="entireSequence" items="${entireSequence}">
+			<tr>
+				<td>${entireSequence}</td>
+			</tr>
+		</c:forEach>
+	</table>
 </div>
 <div id="footer">
 		<p> &copy; 2013 autocurate. |</a>
