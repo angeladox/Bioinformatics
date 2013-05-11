@@ -74,6 +74,11 @@ a:hover {
 	margin: 0px auto;
 }
 
+#oops {
+	margin-left: 150px;
+	padding: 30px 0px;
+	color: #000000;
+}
 /* Logo */
 #logo {
 	margin: 0px;
@@ -453,6 +458,13 @@ a:hover {
 			</div>
 		</div>
 	</div>
+	<div id="oops">
+				<h4>
+					Oops! Something went wrong with your search. 
+				</h4>
+				<h4>This is an autocurate issue that we will do our best to resolve promptly.</h4>
+				
+			</div>
 	<div id="wrapper">
 		<!-- end #header -->
 		<div id="page">
@@ -493,7 +505,7 @@ a:hover {
 							<div class="entry">
 								<p>
 									This is <strong>autocurate</strong>, a free curation automation tool that allows researchers
-									to discover noncoding regions of DNA.
+									to discover noncoding regions of DNA with speed, accuracy, and consistency.
 								</p>
 								<p class="links">
 									<a href="/autocurate/about" class="button">Read More</a>

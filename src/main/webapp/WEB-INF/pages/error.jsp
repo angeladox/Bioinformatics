@@ -220,6 +220,7 @@ a:hover {
 /* Content */
 #content {
 	float: left;
+	margin-left:125px;
 	width: 700px;
 	height: 300px;
 }

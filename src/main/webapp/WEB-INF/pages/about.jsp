@@ -602,6 +602,7 @@ capability to curate introns.</p>
 <ul>
 <li><b>Project name:</b> autocurate: Automated Curation of Genetic Data to Discover Noncoding DNA Sequences</li>
 <li><b>Project home page:</b> <a href="/autocurate/">http://gerald.rcg.usm.maine.edu:8080/autocurate/</a></li>
+<li><b>Source code available from: </b><a href="https://github.com/angeladox/Bioinformatics">https://github.com/angeladox/Bioinformatics</a></li>
 <li><b>Programming language:</b> Java</li>
 <li><b>Requirements for self-deployment:</b> Java JDK 1.7 or higher, Tomcat 7.0 or higher</li></ul>
 <br><br>

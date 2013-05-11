@@ -59,9 +59,7 @@ public class SequenceRetriever {
 			daSequence = chr.getGenesOnRegion(targetGene.getCoordEnd(), chromosomeGene.getChromCoordEnd());
 			for (DAGene gene : daSequence) {
 				sequenceString += gene.getSequenceAsString();
-				System.out.println("Got sequence string.");
 				sequenceLength += gene.getLength();
-				System.out.println("sequenceLength is " + sequenceLength);
 			}
 		} catch (Exception e) {
 			System.out.println("Could not get sequence genes.");
