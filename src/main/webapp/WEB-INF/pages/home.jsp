@@ -435,7 +435,7 @@ a:hover {
 			<ul>
 				<li class="current_page_item"><a href="#">Homepage</a></li>
 				<li><a href="/autocurate/about">About</a></li>
-				<li><a href="/autocurate/ensemblInstructions">Link to the "Old Process" Instructions</a></li>
+				<li><a href="/autocurate/ensemblInstructions">"Old Process" Instructions</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->

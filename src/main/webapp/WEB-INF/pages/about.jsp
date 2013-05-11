@@ -431,7 +431,7 @@ a:hover {
 			<ul>
 				<li><a href="/autocurate/">Homepage</a></li>
 				<li><a href="/autocurate/about">About</a></li>
-				<li><a href="/autocurate/ensemblInstructions">Link to the "Old Process" Instructions</a></li>
+				<li><a href="/autocurate/ensemblInstructions">"Old Process" Instructions</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->
@@ -581,7 +581,7 @@ followed by the Stable ID of the target gene, followed by the type of sequence, 
 <h3><b>Future Work</b></h3>
 <p>Autocurate can and should be extended to include many other features. As is mentioned above, autocurate
 requires improvement in order to provide its users with 100% correct results. In addition, autocurate currently only generates 
-what is referred to by researchers as an "either" sequence (see Appendix A - Curation Notes for Ensembl). This sequence is the gene sequence
+what is referred to by researchers as an "either" sequence (see "Old Process Instructions" section). This sequence is the gene sequence
  between the target and the next gene upstream of it no matter which strand it occurs on. Autocurate should be expanded to also generate 
  a "same" sequence, which indicates the sequence between the target gene and the next gene upstream of it on the same strand it is on.
  Autocurate should be capable of locating these sequences and automatically producing the relevant text files for download.
@@ -614,14 +614,15 @@ assistance and encouragement on this project. </p>
 <h3><b>References</b></h3>
 
 <ul>
-<li>The Ensembl Genome Browser. http://uswest.ensembl.org/index.html.</li>
+<li>The Ensembl Genome Browser. <a href="http://uswest.ensembl.org/index.html">http://uswest.ensembl.org/index.html.</a></li>
 
-<li>The JEnsembl API project. http://jensembl.sourceforge.net/.</li>
+<li>The JEnsembl API project. <a href="http://jensembl.sourceforge.net/">http://jensembl.sourceforge.net/.</a></li>
 
 <li>Thompson, J. Ensembl Curation Instructions. 9 August 2012.</li>
 
-<li>TRANSFAC Transcription Factor Binding Sites http://www.biobase-
-international.com/product/transcription-factor-binding-sites</li></ul>
+<li>TRANSFAC Transcription Factor Binding Sites <a href="http://www.biobase-
+international.com/product/transcription-factor-binding-sites">http://www.biobase-
+international.com/product/transcription-factor-binding-sites</a></li></ul>
 </div>
 <div id="footer">
 		<p>
