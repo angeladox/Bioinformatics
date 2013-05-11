@@ -220,8 +220,9 @@ a:hover {
 /* Content */
 #content {
 	float: left;
-	width: 700px;
-	height: 300px;
+	width: 1000px;
+	height: 2000px;
+	margin-left: 125px;
 }
 
 .post {
@@ -429,13 +430,13 @@ a:hover {
 }
 </style>
 </head>
-	<body>
+<body>
 	<div id="menu-wrapper">
 		<div id="menu">
 			<ul>
 				<li><a href="/autocurate/">Homepage</a></li>
 				<li><a href="/autocurate/about">About</a></li>
-				<li><a href="/autocurate/ensemblInstructions">Links</a></li>
+				<li><a href="/autocurate/ensemblInstructions">Link to the "Old Process" Instructions</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->
@@ -453,17 +454,29 @@ a:hover {
 			</div>
 		</div>
 	</div>
-<h3><b>Curation Notes for Ensembl</b></h3>
-Jeffrey Thompson
+	<div id="content">
+						<div class="post">
+							<h2 class="title">
+								<a href="#">Curation Notes for Ensembl</a>
+							</h2>
+							
+							
+							<div id="logo">
+								<p>Last updated Thu Aug  9 08:53:19 EDT 2012</p>
+								<p>Updated Fri Nov 2 13:30:41 EDT 2012 describing how to find end of scaffold.</p>
+								<p>Updated Fri Jan 18 09:55:24 EST 2013 to add clearer instructions for 
+handling cases when there is no upstream or downstream gene.</p>
+								<p>Jeffrey Thompson</p>
+							</div>
+							<div style="clear: both;">&nbsp;</div>
+							<div class="entry">
+							
 
-Thu Aug  9 08:53:19 EDT 2012
-Updated Fri Nov 2 13:30:41 EDT 2012 describing how to find end of scaffold.
-Updated Fri Jan 18 09:55:24 EST 2013 to add clearer instructions for 
-handling cases when there is no upstream or downstream gene.
 
-The point of this curation protocol is to search for a target gene in the
+
+<p>The point of this curation protocol is to search for a target gene in the
 Ensembl database, find the gene upstream (or downstream) of it and use
-the indices of both genes to download the DNA sequence between them.
+the indices of both genes to download the DNA sequence between them.</p>
 
 With each curation we create two sets of files:
 * A set of files named <speciesName>.either.txt
@@ -612,18 +625,8 @@ at the location box (it is the second box down from the top of 'Region in
 detail'. Remove the second index in the range and enter 9999999999, then click
 'Go'. Ensembl will update the page and automatically change the second index
 to the end of the scaffold.
-								</p>
-								
-							</div>
-						</div>
-					</div>
-					<!-- end #content -->
-				</div>
-			</div>
-		</div>
-		<!-- end #page -->
-	</div>
-	<div id="footer">
+</div>
+<div id="footer">
 		<p>
 			&copy; 2013 autocurate. |</a>
 			| Bioinformatics: University of Southern
@@ -631,5 +634,7 @@ to the end of the scaffold.
 		</p>
 	</div>
 	<!-- end #footer -->
+
+
 </body>
 </html>

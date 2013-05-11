@@ -435,7 +435,7 @@ a:hover {
 			<ul>
 				<li class="current_page_item"><a href="#">Homepage</a></li>
 				<li><a href="/autocurate/about">About</a></li>
-				<li><a href="/autocurate/ensemblInstructions">Links</a></li>
+				<li><a href="/autocurate/ensemblInstructions">Link to the "Old Process" Instructions</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->
@@ -462,6 +462,7 @@ a:hover {
 						<ul>
 							<li>
 								<h2>Search For a Target Gene Here:</h2>
+								<h4>(Good candidates are: "cftr" "capza2," or "cav1" for the human species)</h4>
 								<div id="search">
 									<form method="post" action="/autocurate/submit">							
 										<div>
@@ -486,7 +487,7 @@ a:hover {
 								<a href="#">Welcome to AutoCurate</a>
 							</h2>
 							<p class="meta">
-								<span class="date">April 2013</span>
+								<span class="date">May 2013</span>
 							</p>
 							<div style="clear: both;">&nbsp;</div>
 							<div class="entry">
@@ -495,7 +496,7 @@ a:hover {
 									to discover noncoding regions of DNA with speed, accuracy, and consistency.
 								</p>
 								<p class="links">
-									<a href="#" class="button">Read More</a>
+									<a href="/autocurate/about" class="button">Read More</a>
 								</p>
 							</div>
 						</div>
